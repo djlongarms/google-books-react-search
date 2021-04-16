@@ -4,6 +4,7 @@ const ObjectId = require('mongojs').ObjectId
 
 const db = require('./db')
 const app = express()
+const { Book } = require('./models')
 
 app.use(express.static(join(__dirname, 'client', 'build')))
 app.use(express.urlencoded({ extended: true }))

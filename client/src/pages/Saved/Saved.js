@@ -25,10 +25,10 @@ const Saved = () => {
         </Row>
         <Row>
           <Col id="started">
-            <h5>Started Books</h5>
+            <h5>Unstarted Books</h5>
           </Col>
           <Col id="unstarted">
-            <h5>Unstarted Books</h5>
+            <h5>Started Books</h5>
           </Col>
         </Row>
       </Container>

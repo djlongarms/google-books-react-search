@@ -5,7 +5,11 @@ const Book = new Schema({
   authors: Array,
   description: String,
   image: String,
-  link: String
+  link: String,
+  started: {
+    type: Boolean,
+    default: false
+  }
 })
 
 module.exports = model('Book', Book)

@@ -67,7 +67,7 @@ const Search = () => {
                     <Col>
                       <h3>{book.volumeInfo.title}</h3>
                       <img
-                        src={book.volumeInfo.imageLinks.thumbnail}
+                        src={book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : null}
                         alt={`${book.volumeInfo.title} thumbnail`}
                       />
                     </Col>

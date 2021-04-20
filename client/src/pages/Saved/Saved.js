@@ -1,14 +1,31 @@
 import { useState, useEffect } from 'react'
-import { Container, Col, Row } from 'reactstrap'
+import {
+  Container, Col, Row,
+  Card, CardBody, CardTitle, CardSubtitle, CardText, Button
+} from 'reactstrap'
 import './Saved.css'
-import axios from 'axios'
+import Book from '../../utils/BookAPI'
 
 const Saved = () => {
   const [bookState, setBookState] = useState({
-
+    books: []
   }, [])
 
+  const handleDeleteBook = id => {
+    Book.deleteBook(id)
+      .then(() => {
+        const books = bookState.books.filter(book => book._id !== id)
+        setBookState({ ...bookState, books })
+      })
+  }
 
+  useEffect(() => {
+    Book.getBooks({})
+      .then(({ data: books }) => {
+        setBookState({ ...bookState, books })
+      })
+      .catch(err => console.log(err))
+  })
 
   return (
     <>
@@ -24,11 +41,34 @@ const Saved = () => {
           </Col>
         </Row>
         <Row>
-          <Col id="started">
-            <h5>Unstarted Books</h5>
-          </Col>
-          <Col id="unstarted">
-            <h5>Started Books</h5>
+          <Col>
+            {
+              bookState.books.length ?
+                bookState.books.map(book => (
+                  <>
+                    <Row>
+                      <Col>
+                        <h3>{book.title}</h3>
+                        <img
+                          src={book.image}
+                          alt={`${book.title} thumbnail`}
+                        />
+                      </Col>
+                      <Col>
+                        <Card>
+                          <CardBody>
+                            <CardTitle tag="h5">{book.title}</CardTitle>
+                            <CardSubtitle>{book.authors}</CardSubtitle>
+                            <CardText>{book.description}</CardText>
+                            <Button onClick={() => handleDeleteBook(book._id)}>Remove From Reading List</Button>
+                          </CardBody>
+                        </Card>
+                      </Col>
+                    </Row>
+                    <hr />
+                  </>
+                )) : null
+            }
           </Col>
         </Row>
       </Container>
